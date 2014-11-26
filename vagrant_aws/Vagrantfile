@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "dummy"
+
+  config.omnibus.chef_version = :latest
+
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id = "access/key/id"
+    aws.secret_access_key = "secret/access/key"
+    aws.keypair_name = "keypair/name"
+
+    aws.region = "eu-west-1"
+
+    aws.ami = "ami-f0b11187"
+    aws.instance_type = "t2.micro"
+
+    aws.security_groups = ['webservice']
+
+    override.ssh.username = "ubuntu"
+    override.ssh.private_key_path = "path/to/keypair/pem"
+  end
+
+  config.vm.provision "chef_solo" do |chef|
+    chef.cookbooks_path = "../chef/cookbooks"
+    chef.roles_path = "../chef/roles"
+    chef.add_role "prod"
+  end
+
+  config.vm.synced_folder "../server/", "/home/ubuntu/server"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+end

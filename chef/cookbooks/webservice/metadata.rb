@@ -1,0 +1,11 @@
+name             'webservice'
+maintainer       'Gonzalo Martin'
+maintainer_email 'gonzalo@mashme.tv'
+license          'All rights reserved'
+description      'Demo cookbook'
+version          '0.0.1'
+recipe           'webservice', 'Configures dependencies for a Flask-based web service'
+
+depends 'apt'
+depends 'python'
+depends 'mongodb'
