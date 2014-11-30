@@ -20,10 +20,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provision "chef_solo" do |chef|
   #  chef.cookbooks_path = "../chef/cookbooks"
   #  chef.roles_path = "../chef/roles"
-  #  chef.add_role "dev"
+  #  chef.environments_path = "../chef/environments"
+  #  chef.environment = "dev"
+  #  chef.add_role "web_server"
   #end
 
   #Synced folders
-  #config.vm.synced_folder "../server/", "/home/vagrant/server"
+  # config.vm.synced_folder "../server/", "/home/vagrant/server"
   config.vm.synced_folder '.', '/vagrant', disabled: true
 end

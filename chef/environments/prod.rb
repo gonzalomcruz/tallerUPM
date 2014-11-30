@@ -1,5 +1,5 @@
 name			'prod'
-description		'Production role'
+description		'Production environment'
 
 default_attributes(
 	"webservice" => {
@@ -8,7 +8,3 @@ default_attributes(
 		"group" => 'ubuntu'
 	}
 )
-
-run_list [
-	"recipe[webservice]"
-]

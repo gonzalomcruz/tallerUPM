@@ -1,5 +1,5 @@
 name			'dev'
-description		'Developement role'
+description		'Developement environment'
 
 default_attributes(
 	"webservice" => {
@@ -8,7 +8,3 @@ default_attributes(
 		"group" => 'vagrant'
 	}
 )
-
-run_list [
-	"recipe[webservice]"
-]
