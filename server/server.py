@@ -43,11 +43,25 @@ def push_message():
 	return json.dumps({"status": "ok"})
 
 
-@app.route('/list_messages', methods=['GET'])
+@app.route('/messages', methods=['GET'])
 def show_messages():
 	""" dump messages stored in DB """
 	response = []
 	for message in db.messages.find():
+		response.append({
+			"username" : message['username'],
+			"message" : message['content'],
+			"timestamp" : message['timestamp']
+		})
+
+	return json.dumps(response)
+
+
+@app.route('/messages/<username>', methods=['GET'])
+def show_user_messages(username):
+	""" show user's messages """
+	response = []
+	for message in db.messages.find({'username': str(username)}):
 		response.append({
 			"username" : message['username'],
 			"message" : message['content'],
