@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Motherfucking web service</title>
+		<title>Messaging web service</title>
 	</head>
 <body>
-	<h1>This is a motherfucking web service</h1>
-	<h3>Messaging service</h3>
-	<form action="http://192.168.33.10:8080/push_message" method="POST" style="width:50%">
+	<h1>Messaging web service</h1>
+	<h3>Post your message</h3>
+	<form action="http://<%= node['network']['interfaces']['eth1']['addresses'].to_hash.select {|addr, info| info["family"] == "inet"}.flatten.first %>:8080/push_message" method="POST" style="width:50%">
 		<fieldset style="border:0px">
 			<label>Username</label>
 			<input id="username" name="username" type="text" style="width:20%;">
