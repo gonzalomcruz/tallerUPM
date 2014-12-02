@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+from urllib2 import urlopen
 from flask import Flask, request, render_template
 from pymongo import MongoClient
 
@@ -23,7 +24,9 @@ def messages_service():
 		NOTA: nunca enviar un archivo estatico de esta forma.
 		En cambio, utilizar un servidor web como Nginx.
 	"""
-	return render_template('index.html')
+	public_ip = str(json.load(urlopen('http://httpbin.org/ip'))['origin'])
+
+	return render_template('index.html', ip_address=public_ip)
 
 
 @app.route('/push_message', methods=['POST'])

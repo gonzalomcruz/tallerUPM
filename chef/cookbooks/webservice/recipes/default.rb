@@ -45,15 +45,6 @@ python_pip "pymongo" do
 	action :install
 end
 
-#index template
-template "#{node['webservice']['server_dir']}/templates/index.html" do
-	source 'index.erb'
-	owner node['webservice']['user']
-	group node['webservice']['group']
-	mode 0644
-	action :create
-end
-
 #supervisor configuration
 template '/etc/supervisor/conf.d/webservice.conf' do
 	source 'supervisor_webservice.erb'
