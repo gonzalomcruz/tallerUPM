@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+import sys
 from urllib2 import urlopen
 from flask import Flask, request, render_template
 from pymongo import MongoClient
@@ -10,6 +11,9 @@ app = Flask(__name__)
 
 #pymongo
 db = MongoClient().webservice
+
+#Dev phase
+ENVIRONMENT = None
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
@@ -24,7 +28,11 @@ def messages_service():
 		NOTA: nunca enviar un archivo estatico de esta forma.
 		En cambio, utilizar un servidor web como Nginx.
 	"""
-	public_ip = str(json.load(urlopen('http://httpbin.org/ip'))['origin'])
+	if ENVIRONMENT == 'dev':
+		public_ip = '192.168.33.10'
+	else:
+		# ENVIRONMENT = 'prod'
+		public_ip = str(json.load(urlopen('http://httpbin.org/ip'))['origin'])
 
 	return render_template('index.html', ip_address=public_ip)
 
@@ -76,6 +84,11 @@ def show_user_messages(username):
 
 if __name__ == "__main__":
 	""" run flask server """
+	try:
+		ENVIRONMENT = str(sys.argv[1])
+	except Exception:
+		pass
+
 	app.run(
 		host='0.0.0.0',
 		port=8080

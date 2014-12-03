@@ -3,7 +3,7 @@
 #
 
 [program:webservice]
-command=python server.py
+command=python server.py <%= node.chef_environment %>
 directory=<%= node[:webservice][:server_dir] %>
 user=<%= node[:webservice][:user] %>
 group=<%= node[:webservice][:group] %>
